@@ -6,6 +6,8 @@ library(here)
 library(lubridate)
 library(janitor)
 
+last_checked <- "2022-02-20"
+
 # Note: google sheets will likely ask you to authenticate prior to importing
 
 # read in helper function ------------------------------------------------------
@@ -63,6 +65,8 @@ dat_clean %>%
   
 
 dat_emails <- dat_clean %>% 
+  # only look at nominations after last checked
+  filter(Q1 > as_date(last_checked)) %>% 
   # remove any previous curators
   filter(!check) %>% 
   # keep only those who consent
