@@ -6,7 +6,7 @@ library(here)
 library(lubridate)
 library(janitor)
 
-last_checked <- "2022-02-20"
+last_checked <- "2022-02-24"
 
 # Note: google sheets will likely ask you to authenticate prior to importing
 
@@ -23,6 +23,7 @@ previous_curators_raw <- map_df(
   .f = read_sheet,
   ss = drive_sheet
 ) 
+
 
 previous_curators <- previous_curators_raw %>% 
   janitor::clean_names() %>% 
@@ -62,13 +63,17 @@ dat_clean <- dat_raw %>%
 # view any entries that did not consent ----------------------------------------
 dat_clean %>% 
   filter(Q12 != "Yes, I consent.")  
+
+# view any nominations of previous curators ------------------------------------
+dat_clean %>% 
+  filter(check)  
   
 
 dat_emails <- dat_clean %>% 
   # only look at nominations after last checked
   filter(Q1 > as_date(last_checked)) %>% 
   # remove any previous curators
-  filter(!check) %>% 
+  # filter(!check) %>% 
   # keep only those who consent
   filter(Q12 == "Yes, I consent.") %>% 
   group_by(draft_name) %>% 
@@ -77,7 +82,6 @@ dat_emails <- dat_clean %>%
     draft_email = purrr::map(data, compose_email)
     ) %>% 
   ungroup()
-
 
 
 
