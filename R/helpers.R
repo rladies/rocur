@@ -16,6 +16,8 @@ compose_email <- function(data) {
     glue("\n\n") %>% 
     glue("If you are ready to sign up please review our current schedule of curators (https://tinyurl.com/wearerladies-schedule) and submit the sign up form (https://tinyurl.com/wearerladies-sign-up), which takes approximately 20 minutes to complete.\n\n") %>% 
     glue("\n\n") %>% 
+    glue("If you are interested in curating, but not immediately, please consider this an open invitation to schedule yourself when your time allows.\n\n") %>% 
+    glue("\n\n") %>% 
     glue("Thank you for considering curating for @WeAreRLadies!") %>% 
     glue("\n\n") %>%
     glue("\n\n") %>% 
