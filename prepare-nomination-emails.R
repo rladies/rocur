@@ -6,7 +6,7 @@ library(here)
 library(lubridate)
 library(janitor)
 
-last_checked <- "2022-03-04"
+last_checked <- "2022-03-08"
 
 # Note: google sheets will likely ask you to authenticate prior to importing
 
