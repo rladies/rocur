@@ -25,6 +25,7 @@ previous_curators_raw <- map_df(
 ) 
 
 
+
 previous_curators <- previous_curators_raw %>% 
   janitor::clean_names() %>% 
   select(1:5) %>% 
