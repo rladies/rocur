@@ -42,9 +42,14 @@ rladies_tweets <- rladies_tweets_raw |>
     this_year = interval(as_date("2022-01-01"), as_date("2022-12-31")),
     in_this_year = created_at %within% this_year,
     url = glue::glue("https://twitter.com/WeAreRLadies/status/{id_str}") 
-  ) |> 
+  ) |>   
   filter(in_this_year) 
 
+rladies_tweets |> 
+  summarise(
+    n_likes = sum(favorite_count),
+    n_retweet = sum(retweet_count)
+  )
 
 # merge tweets with curators ---------------------------------------------------
 
@@ -57,10 +62,13 @@ top_tweets <- rladies_tweets |>
     ),
     match_fun = list(`>=`, `<=`)
   ) |> 
-  group_by(curator) |> 
+  group_by(curator, twitter_handle) |> 
   mutate(max_favorite = max(favorite_count, na.rm = TRUE)) |> 
   ungroup() |> 
-  filter(max_favorite == favorite_count | is.na(curator)) |> 
+  filter(max_favorite == favorite_count) |> 
   arrange(desc(favorite_count)) 
 
+top_tweets |> 
+  select(created_at, curator, twitter_handle, favorite_count, retweet_count, url) |> 
+  view()
 

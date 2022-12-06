@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # draft emails
 drafts/*
+
+# curator pics
+img/*
